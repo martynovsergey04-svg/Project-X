@@ -93,12 +93,12 @@ const images = [
   "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
 ];
 
-function generateRichTheory(phaseName, t, minBlocks = 10, globalId) {
+function generateRichTheory(phaseName, t, minBlocks = 1, globalId) {
   const blocks = [];
   
   blocks.push({
     title: `Введение: ${t.t}`,
-    content: `*${t.s}* — ${t.c}\n\nНа этом этапе важно понимать, что концепция "${t.t}" в фазе "${phaseName}" развивается нелинейно. Крупный капитал оперирует огромными объемами ликвидности. Алгоритмические торговые боты (HFT) совершают миллионы микро-транзакций, чтобы скрыть следы институциональных покупок. В этом блоке мы разбираем, как именно это происходит на практике с учетом актуальной ситуации на рынке. Понимание данного принципа отделяет 95% теряющих трейдеров от 5% системно зарабатывающих.\n\nФундаментальные правила должны соблюдаться безукоризненно.`
+    content: `*${t.s}* — ${t.c}\n\nПонимание данного принципа отделяет 95% теряющих трейдеров от 5% системно зарабатывающих.`
   });
 
   for (let i = 1; i <= minBlocks; i++) {
@@ -106,10 +106,8 @@ function generateRichTheory(phaseName, t, minBlocks = 10, globalId) {
     const term1 = terms[Math.floor(Math.random() * terms.length)];
     const term2 = terms[Math.floor(Math.random() * terms.length)];
 
-    let content = `Механика работы заключается в следующем. Рынок постоянно тестирует ключевые уровни. Когда цена подходит к зоне консолидации, начинается активный сбор стоп-ордеров ритейл-трейдеров. Ритейл видит "пробой" и заходит в сделку по рынку. В этот момент Умные Деньги (Smart Money) используют эту ликвидность для загрузки своей встречной позиции. Формирующийся ${term1} служит главным магнитом для будущей цены.\n\n`;
-    content += `**Ключевое правило: Никогда не торгуйте очевидные паттерны без подтверждения со стороны старшего таймфрейма (HTF) и понимания рыночного контекста. Алгоритмические паттерны всегда маскируются под очевидные рыночные движения, чтобы собрать максимальную ликвидность перед основным импульсом.**\n\n`;
-    content += `На ${i}-м этапе мы углубляемся в структуру и видим, как институциональные провайдеры ликвидности используют диапазоны (ranges) для создания ложных пробоев (deviations). Медвежьи капканы и бычьи ловушки — это не случайность, а системный код алгоритма доставки цены. Анализ элемента "${term2}" подтверждает эти намерения.\n\n`;
-    content += `*Практический вывод:* всегда дожидайтесь слома структуры (BOS/CHOCH) и возврата в зону истинной стоимости (Deep Discount / Premium) перед позиционированием. Это гарантирует, что вы следуете за крупным капиталом, а не являетесь для него ликвидностью.`;
+    let content = `Когда цена подходит к зоне консолидации, начинается активный сбор стоп-ордеров ритейл-трейдеров. Формирующийся ${term1} служит главным магнитом для будущей цены.\n\n`;
+    content += `На ${i}-м этапе мы углубляемся в структуру и видим, как институциональные провайдеры ликвидности используют диапазоны. Анализ элемента "${term2}" подтверждает эти намерения.`;
 
     blocks.push({
       title: `Этап ${i}: Практическая механика и ${term1}`,
@@ -123,7 +121,7 @@ function generateRichTheory(phaseName, t, minBlocks = 10, globalId) {
 
 function generateQuizArray(t) {
   const questions = [];
-  for(let i=1; i<=6; i++) {
+  for(let i=1; i<=2; i++) {
     questions.push({
       question: `Вопрос ${i} по теме "${t.t}": Как действовать в условиях повышенной волатильности согласно материалу данного модуля?`,
       options: [
@@ -168,9 +166,9 @@ for (let pIdx = 0; pIdx < phaseNames.length; pIdx++) {
     // Random chart for every module
     const isUpTrend = Math.random() > 0.5 ? 'up' : 'down';
     let chartData = [];
-    if (globalId % 4 !== 0) { // 75% chance to have a chart
+    if (globalId % 5 === 0) { // 20% chance to have a chart
       let p = 50000;
-      for(let i=0; i<30; i++){
+      for(let i=0; i<15; i++){
         let o = p;
         let up = false;
         if (isUpTrend === 'up') up = Math.random() > 0.4;
@@ -189,7 +187,7 @@ for (let pIdx = 0; pIdx < phaseNames.length; pIdx++) {
     // Every module has an image now
     const imageUrl = images[globalId % images.length];
 
-    const theory = generateRichTheory(phaseName, t, 4, globalId);
+    const theory = generateRichTheory(phaseName, t, 2, globalId);
     
     // Using phase-specific assignments
     const descriptionText = phaseTaskContext[pIdx] || phaseTaskContext[0];
