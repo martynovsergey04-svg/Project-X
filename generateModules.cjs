@@ -189,7 +189,7 @@ for (let pIdx = 0; pIdx < phaseNames.length; pIdx++) {
     // Every module has an image now
     const imageUrl = images[globalId % images.length];
 
-    const theory = generateRichTheory(phaseName, t, 10, globalId);
+    const theory = generateRichTheory(phaseName, t, 4, globalId);
     
     // Using phase-specific assignments
     const descriptionText = phaseTaskContext[pIdx] || phaseTaskContext[0];
@@ -218,5 +218,5 @@ export const courseModules = ${JSON.stringify(modules, null, 2)};
 export const moduleData: Record<string, any> = ${JSON.stringify(moduleData, null, 2)};
 `;
 
-fs.writeFileSync('./src/data/modules.ts', fileContent.trim());
+fs.writeFileSync('./src/data/modules.ts', fileContent.trim(), 'utf8');
 console.log(`Premium Modules generated successfully! ${globalId - 1} Modules created.`);

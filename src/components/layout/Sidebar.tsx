@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, Activity, LogOut } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Activity, LogOut, Download } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 import { cn } from '../../lib/utils';
 
@@ -12,6 +12,16 @@ const navItems = [
 
 export default function Sidebar() {
   const { user, logout } = useUser();
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
 
   return (
     <aside className="w-64 border-r border-slate-800 flex flex-col p-6 bg-black z-20">
@@ -62,6 +72,20 @@ export default function Sidebar() {
         <div className="flex justify-between text-[9px] text-slate-500 tracking-widest">
           <span>XP: {user?.xp}</span>
         </div>
+
+        {deferredPrompt && (
+          <button 
+            onClick={async () => {
+              deferredPrompt.prompt();
+              const { outcome } = await deferredPrompt.userChoice;
+              if (outcome === 'accepted') setDeferredPrompt(null);
+            }}
+            className="mt-6 w-full flex items-center justify-center space-x-2 text-[10px] text-cyan-400 bg-cyan-900/20 hover:bg-cyan-900/40 border border-cyan-900/50 hover:border-cyan-500 uppercase tracking-widest transition-colors py-2 rounded shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+          >
+            <Download className="w-3 h-3" />
+            <span>Установить на ПК</span>
+          </button>
+        )}
 
         <button 
           onClick={logout}
